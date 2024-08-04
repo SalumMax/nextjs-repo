@@ -51,7 +51,9 @@ const Hero = () => {
           </button>
         </form>
       </div>
-    </section> );
+    </section> 
+      
+  );
 }
  
 export default Hero;
