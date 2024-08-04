@@ -1,6 +1,6 @@
 'use client';
 
-import ClipLoader from 'react-spinners/Cliploader';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const override = {
     display: 'block',
