@@ -4,12 +4,12 @@ import connectDB from "@/config/database";
 import Property from '@/models/Property'
 
 const HomeProperties = async () => {
-    // await connectDB();
-    // const properties =    await Property.find({})
-    //                                     .sort({createdAt: -1})
-    //                                     .limit(3)
-    //                                     .lean();
-    const properties = []
+    await connectDB();
+    const properties =    await Property.find({})
+                                        .sort({createdAt: -1})
+                                        .limit(3)
+                                        .lean();
+   
     return ( 
         <>
              <section className="px-4 py-6">
