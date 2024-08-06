@@ -1,34 +1,17 @@
-import mongoose from "mongoose";
-
-let connected = false;
+import mongoose from 'mongoose';
 
 const connectDB = async () => {
-//   mongoose.set("strictQuery", true);
-
-  if (connected) {
-    console.log("MongoDB is already connected");
-    return;
-  }
-
-  const uri = process.env.MONGODB_URI;
-
-  if (typeof uri !== 'string') {
-    console.error("MONGODB_URI is not a valid string.");
-    return;
-  }
-
-  try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000, // 30 seconds
-      socketTimeoutMS: 45000, // 45 seconds
-    });
-    connected = true;
-    console.log("MongoDB connected successfully");
-  } catch (error) {
-    console.log("Something's wrong with DB:", error);
-  }
+    try {
+        await mongoose.connect(process.env.MONGODB_URI, {
+            useNewUrlParser: true, // Optional as it's deprecated
+            useUnifiedTopology: true, // Optional as it's deprecated
+            serverSelectionTimeoutMS: 5000, // Increase timeout to 5 seconds
+        });
+        console.log("MongoDB connected successfully");
+    } catch (error) {
+        console.error("MongoDB connection error:", error);
+        process.exit(1); // Exit the process if connection fails
+    }
 };
 
 export default connectDB;
