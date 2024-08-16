@@ -11,23 +11,22 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Navbar = () => {
   const { data: session } = useSession();
 
-  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
   const pathname = usePathname();
-  
+
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders();
-      console.log(res)
+      console.log(res);
       setProviders(res);
     };
     setAuthProviders();
   }, []);
 
-  console.log(session)
-  
+  console.log(session);
+
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -106,13 +105,14 @@ const Navbar = () => {
           {!session && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-              {/* if there are providers, loop over the object with them and show a button for each */}
+                {/* if there are providers, loop over the object with them and show a button for each */}
                 {providers &&
                   Object.values(providers).map((provider) => (
-                    <button 
-                    key={provider.id} 
-                    onClick={()=> signIn(provider.id)}
-                    className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
+                    <button
+                      key={provider.id}
+                      onClick={() => signIn(provider.id)}
+                      className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                    >
                       <FaGoogle className=" text-white mr-2" />
                       <span>Login or Register</span>
                     </button>
@@ -177,7 +177,7 @@ const Navbar = () => {
                 {/* <!-- Profile dropdown --> */}
                 {isProfileMenuOpen && (
                   <div
-                    id="user-menu" 
+                    id="user-menu"
                     className=" absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
@@ -207,11 +207,10 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
-                      onClick={()=> {
-                        setIsProfileMenuOpen(false)
-                        signOut()
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                        signOut();
                       }}
-                      
                     >
                       Sign Out
                     </button>
@@ -243,20 +242,26 @@ const Navbar = () => {
             >
               Properties
             </Link>
-            {session && (
-              <Link
-                href="/properties/add"
-                className={`${
-                  pathname === "/properties/add" ? "bg-black" : ""
-                } text-white block rounded-md px-3 py-2 text-base font-medium`}
-              >
-                Add Property
-              </Link>
+            {!session && providers && (
+              <div>
+                {Object.values(providers).map((provider) => (
+                  <button
+                    key={provider.id}
+                    onClick={() => signIn(provider.id)}
+                    className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5"
+                  >
+                    <FaGoogle className="mr-2" />
+                    <span>Login or Register</span>
+                  </button>
+                ))}
+              </div>
             )}
-            {!session && (
-              <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5">
-                <i className="fa-brands fa-google mr-2"></i>
-                <span>Login or Register</span>
+            {session && (
+              <button
+                className="text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5"
+                onClick={() => signOut()}
+              >
+                Sign Out
               </button>
             )}
           </div>
