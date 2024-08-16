@@ -101,7 +101,7 @@ const Navbar = () => {
           </div>
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
-          {/* {!session && ( */}
+          {!session && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
               {/* if there are providers, loop over the object with them and show a button for each */}
@@ -117,7 +117,7 @@ const Navbar = () => {
                   ))}
               </div>
             </div>
-          {/* )} */}
+          )}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
           {session && (
