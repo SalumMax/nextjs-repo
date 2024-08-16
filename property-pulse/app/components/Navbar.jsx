@@ -11,13 +11,12 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Navbar = () => {
   const { data: session } = useSession();
 
-  console.log(session)
-
+  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
   const pathname = usePathname();
-
+  
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders();
@@ -26,6 +25,9 @@ const Navbar = () => {
     };
     setAuthProviders();
   }, []);
+
+  console.log(session)
+  
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
