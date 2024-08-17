@@ -41,8 +41,14 @@ export const authOptions = {
     },
     async session({ session }) {
       try {
+        console.log("Fetching user for session:", session.user.email);
         const user = await User.findOne({ email: session.user.email });
-        session.user.id = user._id.toString();
+        if (user) {
+          console.log("User found:", user);
+          session.user.id = user._id.toString();
+        } else {
+          console.log("No user found for email:", session.user.email);
+        }
         return session;
       } catch (error) {
         console.error("Error during session:", error);
