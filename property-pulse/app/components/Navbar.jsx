@@ -9,7 +9,7 @@ import { FaGoogle } from "react-icons/fa";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -25,7 +25,11 @@ const Navbar = () => {
     setAuthProviders();
   }, []);
 
-  console.log(session);
+  if(status === 'loading'){
+    console.log('session is loading...')
+  }
+
+  console.log('session: ', session);
 
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
