@@ -1,6 +1,8 @@
+import addProperty from "../actions/addProperty";
+
 const PropertyAddForm = () => {
   return (
-    <htmlForm>
+    <form action={addProperty}>
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
 
       <div className="mb-4">
@@ -23,7 +25,9 @@ const PropertyAddForm = () => {
         </select>
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Listing Name</label>
+        <label className="block text-gray-700 font-bold mb-2">
+          Listing Name
+        </label>
         <input
           type="text"
           id="name"
@@ -34,7 +38,10 @@ const PropertyAddForm = () => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
+        <label
+          htmlFor="description"
+          className="block text-gray-700 font-bold mb-2"
+        >
           Description
         </label>
         <textarea
@@ -106,7 +113,10 @@ const PropertyAddForm = () => {
           />
         </div>
         <div className="w-full sm:w-1/3 pl-2">
-          <label htmlFor="square_feet" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="square_feet"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Square Feet
           </label>
           <input
@@ -232,7 +242,9 @@ const PropertyAddForm = () => {
               value="Gym/Fitness Center"
               className="mr-2"
             />
-            <label htmlFor="amenity_gym_fitness_center">Gym/Fitness Center</label>
+            <label htmlFor="amenity_gym_fitness_center">
+              Gym/Fitness Center
+            </label>
           </div>
           <div>
             <input
@@ -319,7 +331,10 @@ const PropertyAddForm = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="seller_name" className="block text-gray-700 font-bold mb-2">
+        <label
+          htmlFor="seller_name"
+          className="block text-gray-700 font-bold mb-2"
+        >
           Seller Name
         </label>
         <input
@@ -331,7 +346,10 @@ const PropertyAddForm = () => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="seller_email" className="block text-gray-700 font-bold mb-2">
+        <label
+          htmlFor="seller_email"
+          className="block text-gray-700 font-bold mb-2"
+        >
           Seller Email
         </label>
         <input
@@ -344,7 +362,10 @@ const PropertyAddForm = () => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="seller_phone" className="block text-gray-700 font-bold mb-2">
+        <label
+          htmlFor="seller_phone"
+          className="block text-gray-700 font-bold mb-2"
+        >
           Seller Phone
         </label>
         <input
@@ -379,7 +400,7 @@ const PropertyAddForm = () => {
           Add Property
         </button>
       </div>
-    </htmlForm>
+    </form>
   );
 };
 
