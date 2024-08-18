@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache"; // updates cache once the form is s
 import { redirect } from "next/navigation";
 import cloudinary from "@/config/cloudinary";
 
-async function addProperty(formData) {
+const editProperty = async (propertyId, formData) => {
   await connectDB();
   const sessionUser = await getSessionUser();
 
@@ -16,7 +16,12 @@ async function addProperty(formData) {
 
   const { userId } = sessionUser;
 
-  const images = formData.getAll("images").filter((image) => image.name !== ""); // the 'images' comes from the form attribute 'name', i.e. whatever it's called in there
+  const existingProperty = await Property.findById(propertyId);
+  //Verify ownership
+
+  if (existingProperty.owner.toString() !== userId) {
+    throw new Error("Current user is not authorised to edit this property");
+  }
 
   const propertyData = {
     owner: userId,
@@ -45,37 +50,12 @@ async function addProperty(formData) {
     },
   };
 
-  const imageUrls = [];
-
-  for (const imageFile of images) {
-    const imageBuffer = await imageFile.arrayBuffer();
-    const imageArray = Array.from(new Uint8Array(imageBuffer));
-    const imageData = Buffer.from(imageArray);
-
-    //Convert to base64
-
-    const imageBase64 = imageData.toString("base64");
-
-    // make request to cloudinary
-
-    const result = await cloudinary.uploader.upload(
-      `data:image/png;base64,${imageBase64}`,
-      {
-        folder: "property-flow",
-      }
-    );
-
-    imageUrls.push(result.secure_url);
-  }
-
-  propertyData.images = imageUrls;
-  console.log(propertyData.images);
-
-  const newProperty = new Property(propertyData);
-  await newProperty.save();
-
+  const updatedProperty = await Property.findByIdAndUpdate(
+    propertyId,
+    propertyData
+  );
   revalidatePath("/", "layout");
-  redirect(`/properties/${newProperty._id}`);
-}
+  redirect(`/properties/${updatedProperty._id}`);
+};
 
-export default addProperty;
+export default editProperty;
